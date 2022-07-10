@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-#define BRAINCHECK_NO_ASSERT
+#define BRAINCHECK_DISABLE_ASSERT
 #include "test_support.inc"
 
 using Catch::Matchers::Equals;

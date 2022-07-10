@@ -78,10 +78,10 @@ i.e.
 The user may also define symbols to cause parts of the BrainCheck library to be optimised away at compile time. These symbols MUST be defined prior to including the library.
 
 * Define `BRAINCHECK_DISABLE` to optimise out all macros.
-* Define `BRAINCHECK_NO_PERROR` to optimise out the `braincheck_perror()` macro.
-* Define `BRAINCHECK_NO_BACKTRACE` to optimise out the `braincheck_backtrace()` and `braincheck_backtrace_n()` macros.
-* Define `BRAINCHECK_NO_DEBUG` to optimise out the `braincheck_debug(...)`, `braincheck_debug_array(...)` and `braincheck_debug_hexdump()` macros.
-* Define `BRAINCHECK_NO_ASSERT` to optimise out the assertion macros.
+* Define `BRAINCHECK_DISABLE_PERROR` to optimise out the `braincheck_perror()` macro.
+* Define `BRAINCHECK_DISABLE_BACKTRACE` to optimise out the `braincheck_backtrace()` and `braincheck_backtrace_n()` macros.
+* Define `BRAINCHECK_DISABLE_DEBUG` to optimise out the `braincheck_debug(...)`, `braincheck_debug_array(...)` and `braincheck_debug_hexdump()` macros.
+* Define `BRAINCHECK_DISABLE_ASSERT` to optimise out the assertion macros.
 * Define `BRAINCHECK_ANSI_FORMAT` to emit messages using ansi escape codes.
 
 ## Example

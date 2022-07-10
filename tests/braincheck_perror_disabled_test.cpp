@@ -12,7 +12,7 @@
 * limitations under the License.
 */
 
-#define BRAINCHECK_NO_PERROR
+#define BRAINCHECK_DISABLE_PERROR
 #include "test_support.inc"
 
 using Catch::Matchers::Equals;

@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-#define BRAINCHECK_ASSERTS_NOT_FATAL
+#define BRAINCHECK_NON_FATAL_ASSERTS
 #include "test_support.inc"
 
 // Override line and function name to make testing easier

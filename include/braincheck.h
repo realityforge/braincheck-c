@@ -26,30 +26,30 @@ extern "C" {
 #endif
 
 #ifdef BRAINCHECK_DISABLE
-#define BRAINCHECK_NO_DEBUG
-#define BRAINCHECK_NO_BACKTRACE
-#define BRAINCHECK_NO_PERROR
-#define BRAINCHECK_NO_ASSERT
+#define BRAINCHECK_DISABLE_DEBUG
+#define BRAINCHECK_DISABLE_BACKTRACE
+#define BRAINCHECK_DISABLE_PERROR
+#define BRAINCHECK_DISABLE_ASSERT
 #endif
 
-#if defined(BRAINCHECK_NO_ASSERT) && !defined(BRAINCHECK_ASSERTS_NOT_FATAL)
+#if defined(BRAINCHECK_DISABLE_ASSERT) && !defined(BRAINCHECK_NON_FATAL_ASSERTS)
 #define BRAINCHECK_ASSERTS_FATAL
 #endif
 
-#ifndef BRAINCHECK_NO_DEBUG
+#ifndef BRAINCHECK_DISABLE_DEBUG
 #include <stdbool.h>
 #endif
 
-#ifndef BRAINCHECK_NO_PERROR
+#ifndef BRAINCHECK_DISABLE_PERROR
 #include <errno.h>
 #include <string.h>
 #endif
 
-#ifndef BRAINCHECK_NO_BACKTRACE
+#ifndef BRAINCHECK_DISABLE_BACKTRACE
 #include <execinfo.h>
 #endif
 
-#ifndef BRAINCHECK_NO_ASSERT
+#ifndef BRAINCHECK_DISABLE_ASSERT
 #include <stdarg.h>
 #ifdef BRAINCHECK_ASSERTS_FATAL
 #include <assert.h>
@@ -124,7 +124,7 @@ extern "C" {
 
 #endif
 
-#ifdef BRAINCHECK_NO_DEBUG
+#ifdef BRAINCHECK_DISABLE_DEBUG
 #define braincheck_debug(expr)
 #define braincheck_debug_array(expr, length)
 #define braincheck_debug_hexdump(expr, length)
@@ -410,7 +410,7 @@ static inline void braincheck_debug_pointer(const char* file, const int line, co
 
 #endif
 
-#ifdef BRAINCHECK_NO_PERROR
+#ifdef BRAINCHECK_DISABLE_PERROR
 #define braincheck_perror(label)
 #else
 
@@ -422,7 +422,7 @@ static inline void braincheck_error(const char* file, const int line, const char
 }
 #endif
 
-#ifdef BRAINCHECK_NO_BACKTRACE
+#ifdef BRAINCHECK_DISABLE_BACKTRACE
 #define braincheck_backtrace_n(max_frame_count)
 #define braincheck_backtrace()
 #else
@@ -467,7 +467,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 }
 #endif
 
-#ifdef BRAINCHECK_NO_ASSERT
+#ifdef BRAINCHECK_DISABLE_ASSERT
 
 #define braincheck_assert_fail(message)
 
