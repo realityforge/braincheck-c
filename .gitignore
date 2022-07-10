@@ -18,7 +18,8 @@ Icon?
 
 # JetBrains IDEs
 ############################
-/.clwb
+/.clwb/*
+!**/*.bazelproject
 
 # Temp dirs and local notes
 ############################
