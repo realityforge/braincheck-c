@@ -12,6 +12,8 @@
  * limitations under the License.
  */
 
+#pragma clang diagnostic ignored "-Wvariadic-macros"
+#pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #define BRAINCHECK_PRINTF(args...) printf(args)
 
 #include <printf.h>
