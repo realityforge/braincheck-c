@@ -15,7 +15,7 @@ on:
   # Always run "Build" action for any commit on master branch
   push:
     branches:
-      - 'master'
+      - 'main'
   # Always run the "Build" action when a pull request is opened, synchronized (aka pushed to) or reopened
   pull_request:
 
