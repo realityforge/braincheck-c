@@ -547,47 +547,53 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
                default                      \
              : (expr))
 
-#define braincheck_assert_comparison(op, v1, v2)                                           \
-    if (!((v1)op(v2))) {                                                                   \
-        char v1Str[50];                                                                    \
-        char v2Str[50];                                                                    \
-        snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
-        snprintf(v2Str, sizeof(v2Str), BRAINCHECK_VALUE_FORMAT(v2), BRAINCHECK_VALUE(v2)); \
-        braincheck_internal_assert(__FILE__,                                               \
-                                   __LINE__,                                               \
-                                   BRAINCHECK_FUNCTION_NAME,                               \
-                                   NULL,                                                   \
-                                   "Failed assertion: v1 " #op " v2 (v1 = %s, v2 = %s)",   \
-                                   v1Str,                                                  \
-                                   v2Str);                                                 \
-    }
+#define braincheck_assert_comparison(op, v1, v2)                                               \
+    do {                                                                                       \
+        if (!((v1)op(v2))) {                                                                   \
+            char v1Str[50];                                                                    \
+            char v2Str[50];                                                                    \
+            snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
+            snprintf(v2Str, sizeof(v2Str), BRAINCHECK_VALUE_FORMAT(v2), BRAINCHECK_VALUE(v2)); \
+            braincheck_internal_assert(__FILE__,                                               \
+                                       __LINE__,                                               \
+                                       BRAINCHECK_FUNCTION_NAME,                               \
+                                       NULL,                                                   \
+                                       "Failed assertion: v1 " #op " v2 (v1 = %s, v2 = %s)",   \
+                                       v1Str,                                                  \
+                                       v2Str);                                                 \
+        }                                                                                      \
+    } while (0)
 
-#define braincheck_assert_comparison_m(op, v1, v2, message)                                \
-    if (!((v1)op(v2))) {                                                                   \
-        char v1Str[50];                                                                    \
-        char v2Str[50];                                                                    \
-        snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
-        snprintf(v2Str, sizeof(v2Str), BRAINCHECK_VALUE_FORMAT(v2), BRAINCHECK_VALUE(v2)); \
-        braincheck_internal_assert(__FILE__,                                               \
-                                   __LINE__,                                               \
-                                   BRAINCHECK_FUNCTION_NAME,                               \
-                                   message,                                                \
-                                   "Failed assertion: v1 " #op " v2 (v1 = %s, v2 = %s)",   \
-                                   v1Str,                                                  \
-                                   v2Str);                                                 \
-    }
+#define braincheck_assert_comparison_m(op, v1, v2, message)                                    \
+    do {                                                                                       \
+        if (!((v1)op(v2))) {                                                                   \
+            char v1Str[50];                                                                    \
+            char v2Str[50];                                                                    \
+            snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
+            snprintf(v2Str, sizeof(v2Str), BRAINCHECK_VALUE_FORMAT(v2), BRAINCHECK_VALUE(v2)); \
+            braincheck_internal_assert(__FILE__,                                               \
+                                       __LINE__,                                               \
+                                       BRAINCHECK_FUNCTION_NAME,                               \
+                                       message,                                                \
+                                       "Failed assertion: v1 " #op " v2 (v1 = %s, v2 = %s)",   \
+                                       v1Str,                                                  \
+                                       v2Str);                                                 \
+        }                                                                                      \
+    } while (0)
 
-#define braincheck_assert(v1)                                                              \
-    if (!(v1)) {                                                                           \
-        char v1Str[50];                                                                    \
-        snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
-        braincheck_internal_assert(__FILE__,                                               \
-                                   __LINE__,                                               \
-                                   BRAINCHECK_FUNCTION_NAME,                               \
-                                   NULL,                                                   \
-                                   "Failed assertion: " #v1 " => %s",                      \
-                                   v1Str);                                                 \
-    }
+#define braincheck_assert(v1)                                                                  \
+    do {                                                                                       \
+        if (!(v1)) {                                                                           \
+            char v1Str[50];                                                                    \
+            snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
+            braincheck_internal_assert(__FILE__,                                               \
+                                       __LINE__,                                               \
+                                       BRAINCHECK_FUNCTION_NAME,                               \
+                                       NULL,                                                   \
+                                       "Failed assertion: " #v1 " => %s",                      \
+                                       v1Str);                                                 \
+        }                                                                                      \
+    } while (0)
 
 #define braincheck_assert_m(v1, message)                                                   \
     if (!(v1)) {                                                                           \
