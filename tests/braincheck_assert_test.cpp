@@ -143,7 +143,6 @@ TEST_CASE("braincheck_assert_m - assertion failed")
     REQUIRE_THAT(get_message(), Equals(__FILE__ ":3: myFunction(): Failed assertion: 1 == 0 => false: Some message\n"));
 }
 
-
 TEST_CASE("braincheck_assert_eq_m - assertion successful")
 {
     message_init();
