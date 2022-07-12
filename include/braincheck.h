@@ -534,7 +534,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
                float                  \
              : "%f",                  \
                double                 \
-             : "%f",                  \
+             : "%lf",                 \
                bool                   \
              : "%s",                  \
                default                \
