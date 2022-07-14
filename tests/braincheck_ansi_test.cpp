@@ -131,6 +131,13 @@ TEST_CASE("braincheck_assert - ansi")
     REQUIRE_THAT(get_message(), Equals(EXPECTED_PREFIX " \u001B[31m\u001B[1mFailed assertion: 1 == 0 => false\u001B[0m\n"));
 }
 
+TEST_CASE("braincheck_assert_nonnull - ansi")
+{
+    message_init();
+    braincheck_assert_nonnull(1 == 0 ? "" : NULL);
+    REQUIRE_THAT(get_message(), Equals(EXPECTED_PREFIX " \u001B[31m\u001B[1mFailed assertion: 1 == 0 ? \"\" : NULL => NULL\u001B[0m\n"));
+}
+
 TEST_CASE("braincheck_assert_eq - ansi")
 {
     message_init();
@@ -178,6 +185,13 @@ TEST_CASE("braincheck_assert_m - ansi")
     message_init();
     braincheck_assert_m(1 == 0, "Some message");
     REQUIRE_THAT(get_message(), Equals(EXPECTED_PREFIX " \u001B[31m\u001B[1mFailed assertion: 1 == 0 => false\u001B[0m: Some message\n"));
+}
+
+TEST_CASE("braincheck_assert_nonnull_m - ansi")
+{
+    message_init();
+    braincheck_assert_nonnull_m(1 == 0 ? "" : NULL, "Some message");
+    REQUIRE_THAT(get_message(), Equals(EXPECTED_PREFIX " \u001B[31m\u001B[1mFailed assertion: 1 == 0 ? \"\" : NULL => NULL\u001B[0m: Some message\n"));
 }
 
 TEST_CASE("braincheck_assert_eq_m - ansi")

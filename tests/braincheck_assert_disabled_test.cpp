@@ -22,6 +22,7 @@ TEST_CASE("braincheck_assert")
     message_init();
     braincheck_assert_fail("Some random reason");
     braincheck_assert(1 == 0);
+    braincheck_assert_nonnull(NULL);
     braincheck_assert_eq(1, 2);
     braincheck_assert_neq(1, 1);
     braincheck_assert_lt(1, 1);
@@ -29,6 +30,7 @@ TEST_CASE("braincheck_assert")
     braincheck_assert_gt(1, 1);
     braincheck_assert_gte(0, 1);
     braincheck_assert_m(1 == 0, "Some message");
+    braincheck_assert_nonnull_m(NULL, "Some message");
     braincheck_assert_eq_m(1, 2, "Some message");
     braincheck_assert_neq_m(1, 1, "Some message");
     braincheck_assert_lt_m(1, 1, "Some message");
@@ -36,6 +38,7 @@ TEST_CASE("braincheck_assert")
     braincheck_assert_gt_m(1, 1, "Some message");
     braincheck_assert_gte_m(0, 1, "Some message");
     braincheck_once_assert(1 == 0);
+    braincheck_once_assert_nonnull(NULL);
     braincheck_once_assert_eq(1, 2);
     braincheck_once_assert_neq(1, 1);
     braincheck_once_assert_lt(1, 1);
@@ -43,6 +46,7 @@ TEST_CASE("braincheck_assert")
     braincheck_once_assert_gt(1, 1);
     braincheck_once_assert_gte(0, 1);
     braincheck_once_assert_m(1 == 0, "Some message");
+    braincheck_once_assert_nonnull_m(1 == 0, "Some message");
     braincheck_once_assert_eq_m(1, 2, "Some message");
     braincheck_once_assert_neq_m(1, 1, "Some message");
     braincheck_once_assert_lt_m(1, 1, "Some message");

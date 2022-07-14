@@ -35,6 +35,7 @@ The toolkit also provides assertions that compare values, may take a message (su
 
 * `braincheck_assert_fail(message)`
 * `braincheck_assert(v1)`
+* `braincheck_assert_nonnull(v1)`
 * `braincheck_assert_eq(v1, v2)`
 * `braincheck_assert_neq(v1, v2)`
 * `braincheck_assert_lt(v1, v2)`
@@ -42,6 +43,7 @@ The toolkit also provides assertions that compare values, may take a message (su
 * `braincheck_assert_gt(v1, v2)`
 * `braincheck_assert_gte(v1, v2)`
 * `braincheck_assert_m(v1, message)`
+* `braincheck_assert_nonnull_m(v1, message)`
 * `braincheck_assert_eq_m(v1, v2, message)`
 * `braincheck_assert_neq_m(v1, v2, message)`
 * `braincheck_assert_lt_m(v1, v2, message)`
@@ -50,6 +52,7 @@ The toolkit also provides assertions that compare values, may take a message (su
 * `braincheck_assert_gte_m(v1, v2, message)`
 * `braincheck_once_assert_fail(message)`
 * `braincheck_once_assert(v1)`
+* `braincheck_once_assert_nonnull(v1)`
 * `braincheck_once_assert_eq(v1, v2)`
 * `braincheck_once_assert_neq(v1, v2)`
 * `braincheck_once_assert_lt(v1, v2)`
@@ -57,6 +60,7 @@ The toolkit also provides assertions that compare values, may take a message (su
 * `braincheck_once_assert_gt(v1, v2)`
 * `braincheck_once_assert_gte(v1, v2)`
 * `braincheck_once_assert_m(v1, message)`
+* `braincheck_once_assert_nonnull_m(v1, message)`
 * `braincheck_once_assert_eq_m(v1, v2, message)`
 * `braincheck_once_assert_neq_m(v1, v2, message)`
 * `braincheck_once_assert_lt_m(v1, v2, message)`

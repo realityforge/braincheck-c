@@ -43,6 +43,20 @@ TEST_CASE("braincheck_assert - assertion failed")
     REQUIRE_THAT(get_message(), Equals(__FILE__ ":3: myFunction(): Failed assertion: 1 == 0 => false\n"));
 }
 
+TEST_CASE("braincheck_assert_nonnull - assertion successful")
+{
+    message_init();
+    braincheck_assert_nonnull("");
+    REQUIRE_THAT(get_message(), Equals(""));
+}
+
+TEST_CASE("braincheck_assert_nonnull - assertion failed")
+{
+    message_init();
+    braincheck_assert_nonnull(1 == 0 ? "" : NULL);
+    REQUIRE_THAT(get_message(), Equals(__FILE__ ":3: myFunction(): Failed assertion: 1 == 0 ? \"\" : NULL => NULL\n"));
+}
+
 TEST_CASE("braincheck_assert_eq - assertion successful")
 {
     message_init();
@@ -141,6 +155,20 @@ TEST_CASE("braincheck_assert_m - assertion failed")
     message_init();
     braincheck_assert_m(1 == 0, "Some message");
     REQUIRE_THAT(get_message(), Equals(__FILE__ ":3: myFunction(): Failed assertion: 1 == 0 => false: Some message\n"));
+}
+
+TEST_CASE("braincheck_assert_nonnull_m - assertion successful")
+{
+    message_init();
+    braincheck_assert_nonnull_m("", "Some message");
+    REQUIRE_THAT(get_message(), Equals(""));
+}
+
+TEST_CASE("braincheck_assert_nonnull_m - assertion failed")
+{
+    message_init();
+    braincheck_assert_nonnull_m(1 == 0 ? "" : NULL, "Some message");
+    REQUIRE_THAT(get_message(), Equals(__FILE__ ":3: myFunction(): Failed assertion: 1 == 0 ? \"\" : NULL => NULL: Some message\n"));
 }
 
 TEST_CASE("braincheck_assert_eq_m - assertion successful")

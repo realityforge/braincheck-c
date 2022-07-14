@@ -472,6 +472,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 #define braincheck_assert_fail(message)
 
 #define braincheck_assert(v1)
+#define braincheck_assert_nonnull(v)
 #define braincheck_assert_eq(v1, v2)
 #define braincheck_assert_neq(v1, v2)
 #define braincheck_assert_lt(v1, v2)
@@ -480,6 +481,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 #define braincheck_assert_gte(v1, v2)
 
 #define braincheck_assert_m(v1, message)
+#define braincheck_assert_nonnull_m(v, message)
 #define braincheck_assert_eq_m(v1, v2, message)
 #define braincheck_assert_neq_m(v1, v2, message)
 #define braincheck_assert_lt_m(v1, v2, message)
@@ -490,6 +492,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 #define braincheck_once_assert_fail(message)
 
 #define braincheck_once_assert(v1)
+#define braincheck_once_assert_nonnull(v)
 #define braincheck_once_assert_eq(v1, v2)
 #define braincheck_once_assert_neq(v1, v2)
 #define braincheck_once_assert_lt(v1, v2)
@@ -498,6 +501,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 #define braincheck_once_assert_gte(v1, v2)
 
 #define braincheck_once_assert_m(v1, message)
+#define braincheck_once_assert_nonnull_m(v1, message)
 #define braincheck_once_assert_eq_m(v1, v2, message)
 #define braincheck_once_assert_neq_m(v1, v2, message)
 #define braincheck_once_assert_lt_m(v1, v2, message)
@@ -607,6 +611,28 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
                                    v1Str);                                                 \
     }
 
+#define braincheck_assert_nonnull(v)                                        \
+    do {                                                                    \
+        if (NULL == (v)) {                                                  \
+            braincheck_internal_assert(__FILE__,                            \
+                                       __LINE__,                            \
+                                       BRAINCHECK_FUNCTION_NAME,            \
+                                       NULL,                                \
+                                       "Failed assertion: " #v " => NULL"); \
+        }                                                                   \
+    } while (0)
+
+#define braincheck_assert_nonnull_m(v, message)                             \
+    do {                                                                    \
+        if (NULL == (v)) {                                                  \
+            braincheck_internal_assert(__FILE__,                            \
+                                       __LINE__,                            \
+                                       BRAINCHECK_FUNCTION_NAME,            \
+                                       message,                             \
+                                       "Failed assertion: " #v " => NULL"); \
+        }                                                                   \
+    } while (0)
+
 // clang-format off
 #define braincheck_assert_fail(message) braincheck_internal_assert(__FILE__, __LINE__, BRAINCHECK_FUNCTION_NAME, NULL, "Failed assertion: %s", message)
 
@@ -627,6 +653,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 #define braincheck_once_assert_fail(message) do { static bool print = true; if (print) { braincheck_assert_fail(message); print = false; } } while(0)
 
 #define braincheck_once_assert(v1) do { static bool print = true; if (print) {braincheck_assert(v1); print = false; } } while(0)
+#define braincheck_once_assert_nonnull(v) do { static bool print = true; if (print) {braincheck_assert_nonnull(v); print = false; } } while(0)
 #define braincheck_once_assert_eq(v1, v2) do { static bool print = true; if (print) {braincheck_assert_eq(v1, v2); print = false; } } while(0)
 #define braincheck_once_assert_neq(v1, v2) do { static bool print = true; if (print) {braincheck_assert_neq(v1, v2); print = false; } } while(0)
 #define braincheck_once_assert_lt(v1, v2) do { static bool print = true; if (print) {braincheck_assert_lt(v1, v2); print = false; } } while(0)
@@ -635,6 +662,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 #define braincheck_once_assert_gte(v1, v2) do { static bool print = true; if (print) {braincheck_assert_gte(v1, v2); print = false; } } while(0)
 
 #define braincheck_once_assert_m(v1, message) do { static bool print = true; if (print) {braincheck_assert_m(v1, message); print = false; } } while(0)
+#define braincheck_once_assert_nonnull_m(v1, message) do { static bool print = true; if (print) {braincheck_assert_nonnull_m(v1, message); print = false; } } while(0)
 #define braincheck_once_assert_eq_m(v1, v2, message) do { static bool print = true; if (print) {braincheck_assert_eq_m(v1, v2, message); print = false; } } while(0)
 #define braincheck_once_assert_neq_m(v1, v2, message) do { static bool print = true; if (print) {braincheck_assert_neq_m(v1, v2, message); print = false; } } while(0)
 #define braincheck_once_assert_lt_m(v1, v2, message) do { static bool print = true; if (print) {braincheck_assert_lt_m(v1, v2, message); print = false; } } while(0)

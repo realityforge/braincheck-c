@@ -49,6 +49,34 @@ TEST_CASE("braincheck_once_assert - assertion failed")
     REQUIRE_THAT(get_message(), Equals(__FILE__ ":3: myFunction(): Failed assertion: 1 == 0 => false\n"));
 }
 
+static void do_once_assert_nonnull_success()
+{
+    braincheck_once_assert_nonnull("");
+}
+
+TEST_CASE("braincheck_once_assert_nonnull - assertion successful")
+{
+    message_init();
+    do_once_assert_nonnull_success();
+    do_once_assert_nonnull_success();
+    REQUIRE_THAT(get_message(), Equals(""));
+}
+
+static void do_once_assert_nonnull_fail()
+{
+    const char *someVar = NULL;
+    braincheck_once_assert_nonnull(someVar);
+}
+
+TEST_CASE("braincheck_once_assert_nonnull - assertion failed")
+{
+    message_init();
+    do_once_assert_nonnull_fail();
+    do_once_assert_nonnull_fail();
+    do_once_assert_nonnull_fail();
+    REQUIRE_THAT(get_message(), Equals(__FILE__ ":3: myFunction(): Failed assertion: someVar => NULL\n"));
+}
+
 static void do_once_assert_eq_success()
 {
     braincheck_once_assert_eq(1, 1);
@@ -239,6 +267,34 @@ TEST_CASE("braincheck_once_assert_m - assertion failed")
     do_once_assert_m_failure();
     do_once_assert_m_failure();
     REQUIRE_THAT(get_message(), Equals(__FILE__ ":3: myFunction(): Failed assertion: 1 == 0 => false: Some message\n"));
+}
+
+static void do_once_assert_nonnull_m_success()
+{
+    braincheck_once_assert_nonnull_m("", "Some message");
+}
+
+TEST_CASE("braincheck_once_assert_nonnull_m - assertion successful")
+{
+    message_init();
+    do_once_assert_nonnull_m_success();
+    do_once_assert_nonnull_m_success();
+    REQUIRE_THAT(get_message(), Equals(""));
+}
+
+static void do_once_assert_nonnull_m_failure()
+{
+    const char *someVar = NULL;
+    braincheck_once_assert_nonnull_m(someVar, "Some message");
+}
+
+TEST_CASE("braincheck_once_assert_nonnull_m - assertion failed")
+{
+    message_init();
+    do_once_assert_nonnull_m_failure();
+    do_once_assert_nonnull_m_failure();
+    do_once_assert_nonnull_m_failure();
+    REQUIRE_THAT(get_message(), Equals(__FILE__ ":3: myFunction(): Failed assertion: someVar => NULL: Some message\n"));
 }
 
 static void do_once_assert_eq_m_success()
