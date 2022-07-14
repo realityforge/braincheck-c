@@ -599,17 +599,19 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
         }                                                                                      \
     } while (0)
 
-#define braincheck_assert_m(v1, message)                                                   \
-    if (!(v1)) {                                                                           \
-        char v1Str[50];                                                                    \
-        snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
-        braincheck_internal_assert(__FILE__,                                               \
-                                   __LINE__,                                               \
-                                   BRAINCHECK_FUNCTION_NAME,                               \
-                                   message,                                                \
-                                   "Failed assertion: " #v1 " => %s",                      \
-                                   v1Str);                                                 \
-    }
+#define braincheck_assert_m(v1, message)                                                       \
+    do {                                                                                       \
+        if (!(v1)) {                                                                           \
+            char v1Str[50];                                                                    \
+            snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
+            braincheck_internal_assert(__FILE__,                                               \
+                                       __LINE__,                                               \
+                                       BRAINCHECK_FUNCTION_NAME,                               \
+                                       message,                                                \
+                                       "Failed assertion: " #v1 " => %s",                      \
+                                       v1Str);                                                 \
+        }                                                                                      \
+    } while (0)
 
 #define braincheck_assert_nonnull(v)                                        \
     do {                                                                    \
