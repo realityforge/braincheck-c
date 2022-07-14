@@ -64,7 +64,7 @@ TEST_CASE("braincheck_once_assert_nonnull - assertion successful")
 
 static void do_once_assert_nonnull_fail()
 {
-    const char *someVar = NULL;
+    const char* someVar = NULL;
     braincheck_once_assert_nonnull(someVar);
 }
 
@@ -284,7 +284,7 @@ TEST_CASE("braincheck_once_assert_nonnull_m - assertion successful")
 
 static void do_once_assert_nonnull_m_failure()
 {
-    const char *someVar = NULL;
+    const char* someVar = NULL;
     braincheck_once_assert_nonnull_m(someVar, "Some message");
 }
 
