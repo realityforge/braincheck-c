@@ -471,7 +471,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 
 #define braincheck_assert_fail(message)
 
-#define braincheck_assert(v1)
+#define braincheck_assert(v)
 #define braincheck_assert_nonnull(v)
 #define braincheck_assert_eq(v1, v2)
 #define braincheck_assert_neq(v1, v2)
@@ -491,7 +491,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 
 #define braincheck_once_assert_fail(message)
 
-#define braincheck_once_assert(v1)
+#define braincheck_once_assert(v)
 #define braincheck_once_assert_nonnull(v)
 #define braincheck_once_assert_eq(v1, v2)
 #define braincheck_once_assert_neq(v1, v2)
@@ -585,32 +585,32 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
         }                                                                                      \
     } while (0)
 
-#define braincheck_assert(v1)                                                                  \
-    do {                                                                                       \
-        if (!(v1)) {                                                                           \
-            char v1Str[50];                                                                    \
-            snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
-            braincheck_internal_assert(__FILE__,                                               \
-                                       __LINE__,                                               \
-                                       BRAINCHECK_FUNCTION_NAME,                               \
-                                       NULL,                                                   \
-                                       "Failed assertion: " #v1 " => %s",                      \
-                                       v1Str);                                                 \
-        }                                                                                      \
+#define braincheck_assert(v)                                                                 \
+    do {                                                                                     \
+        if (!(v)) {                                                                          \
+            char v1Str[50];                                                                  \
+            snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v), BRAINCHECK_VALUE(v)); \
+            braincheck_internal_assert(__FILE__,                                             \
+                                       __LINE__,                                             \
+                                       BRAINCHECK_FUNCTION_NAME,                             \
+                                       NULL,                                                 \
+                                       "Failed assertion: " #v " => %s",                     \
+                                       v1Str);                                               \
+        }                                                                                    \
     } while (0)
 
-#define braincheck_assert_m(v1, message)                                                       \
-    do {                                                                                       \
-        if (!(v1)) {                                                                           \
-            char v1Str[50];                                                                    \
-            snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
-            braincheck_internal_assert(__FILE__,                                               \
-                                       __LINE__,                                               \
-                                       BRAINCHECK_FUNCTION_NAME,                               \
-                                       message,                                                \
-                                       "Failed assertion: " #v1 " => %s",                      \
-                                       v1Str);                                                 \
-        }                                                                                      \
+#define braincheck_assert_m(v, message)                                                      \
+    do {                                                                                     \
+        if (!(v)) {                                                                          \
+            char v1Str[50];                                                                  \
+            snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v), BRAINCHECK_VALUE(v)); \
+            braincheck_internal_assert(__FILE__,                                             \
+                                       __LINE__,                                             \
+                                       BRAINCHECK_FUNCTION_NAME,                             \
+                                       message,                                              \
+                                       "Failed assertion: " #v " => %s",                     \
+                                       v1Str);                                               \
+        }                                                                                    \
     } while (0)
 
 #define braincheck_assert_nonnull(v)                                        \
@@ -654,7 +654,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 
 #define braincheck_once_assert_fail(message) do { static bool print = true; if (print) { braincheck_assert_fail(message); print = false; } } while(0)
 
-#define braincheck_once_assert(v1) do { static bool print = true; if (print) {braincheck_assert(v1); print = false; } } while(0)
+#define braincheck_once_assert(v) do { static bool print = true; if (print) {braincheck_assert(v); print = false; } } while(0)
 #define braincheck_once_assert_nonnull(v) do { static bool print = true; if (print) {braincheck_assert_nonnull(v); print = false; } } while(0)
 #define braincheck_once_assert_eq(v1, v2) do { static bool print = true; if (print) {braincheck_assert_eq(v1, v2); print = false; } } while(0)
 #define braincheck_once_assert_neq(v1, v2) do { static bool print = true; if (print) {braincheck_assert_neq(v1, v2); print = false; } } while(0)
