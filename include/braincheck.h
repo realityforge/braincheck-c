@@ -551,9 +551,16 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
                default                      \
              : (expr))
 
+// The compiler should predict that the expression is true. Used when predicting branches.
+#if defined(__clang__) || defined(__GNUC__)
+#define BRAINCHECK_UNLIKELY(expr) __builtin_expect(!!(expr), 0)
+#else
+#define BRAINCHECK_UNLIKELY(expr) (!!(expr))
+#endif
+
 #define braincheck_assert_comparison(op, v1, v2)                                               \
     do {                                                                                       \
-        if (!((v1)op(v2))) {                                                                   \
+        if (BRAINCHECK_UNLIKELY(!((v1)op(v2)))) {                                              \
             char v1Str[50];                                                                    \
             char v2Str[50];                                                                    \
             snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
@@ -570,7 +577,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 
 #define braincheck_assert_comparison_m(op, v1, v2, message)                                    \
     do {                                                                                       \
-        if (!((v1)op(v2))) {                                                                   \
+        if (BRAINCHECK_UNLIKELY(!((v1)op(v2)))) {                                              \
             char v1Str[50];                                                                    \
             char v2Str[50];                                                                    \
             snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
@@ -587,7 +594,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 
 #define braincheck_assert(v)                                                                 \
     do {                                                                                     \
-        if (!(v)) {                                                                          \
+        if (BRAINCHECK_UNLIKELY(!(v))) {                                                     \
             char v1Str[50];                                                                  \
             snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v), BRAINCHECK_VALUE(v)); \
             braincheck_internal_assert(__FILE__,                                             \
@@ -601,7 +608,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 
 #define braincheck_assert_m(v, message)                                                      \
     do {                                                                                     \
-        if (!(v)) {                                                                          \
+        if (BRAINCHECK_UNLIKELY(!(v))) {                                                     \
             char v1Str[50];                                                                  \
             snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v), BRAINCHECK_VALUE(v)); \
             braincheck_internal_assert(__FILE__,                                             \
@@ -613,26 +620,26 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
         }                                                                                    \
     } while (0)
 
-#define braincheck_assert_nonnull(v)                                        \
-    do {                                                                    \
-        if (NULL == (v)) {                                                  \
             braincheck_internal_assert(__FILE__,                            \
                                        __LINE__,                            \
                                        BRAINCHECK_FUNCTION_NAME,            \
                                        NULL,                                \
                                        "Failed assertion: " #v " => NULL"); \
-        }                                                                   \
+#define braincheck_assert_nonnull(v)                                      \
+    do {                                                                  \
+        if (BRAINCHECK_UNLIKELY(NULL == (v))) {                           \
+        }                                                                 \
     } while (0)
 
-#define braincheck_assert_nonnull_m(v, message)                             \
-    do {                                                                    \
-        if (NULL == (v)) {                                                  \
+#define braincheck_assert_nonnull_m(v, message)                           \
+    do {                                                                  \
+        if (BRAINCHECK_UNLIKELY(NULL == (v))) {                           \
             braincheck_internal_assert(__FILE__,                            \
                                        __LINE__,                            \
                                        BRAINCHECK_FUNCTION_NAME,            \
                                        message,                             \
                                        "Failed assertion: " #v " => NULL"); \
-        }                                                                   \
+        }                                                                 \
     } while (0)
 
 // clang-format off
