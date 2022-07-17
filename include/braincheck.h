@@ -565,13 +565,13 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
             char v2Str[50];                                                                    \
             snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
             snprintf(v2Str, sizeof(v2Str), BRAINCHECK_VALUE_FORMAT(v2), BRAINCHECK_VALUE(v2)); \
-            braincheck_internal_assert(__FILE__,                                               \
-                                       __LINE__,                                               \
-                                       BRAINCHECK_FUNCTION_NAME,                               \
-                                       NULL,                                                   \
-                                       "Failed assertion: v1 " #op " v2 (v1 = %s, v2 = %s)",   \
-                                       v1Str,                                                  \
-                                       v2Str);                                                 \
+            braincheck_internal_fail(__FILE__,                                                 \
+                                     __LINE__,                                                 \
+                                     BRAINCHECK_FUNCTION_NAME,                                 \
+                                     NULL,                                                     \
+                                     "Failed assertion: v1 " #op " v2 (v1 = %s, v2 = %s)",     \
+                                     v1Str,                                                    \
+                                     v2Str);                                                   \
         }                                                                                      \
     } while (0)
 
@@ -582,13 +582,13 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
             char v2Str[50];                                                                    \
             snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v1), BRAINCHECK_VALUE(v1)); \
             snprintf(v2Str, sizeof(v2Str), BRAINCHECK_VALUE_FORMAT(v2), BRAINCHECK_VALUE(v2)); \
-            braincheck_internal_assert(__FILE__,                                               \
-                                       __LINE__,                                               \
-                                       BRAINCHECK_FUNCTION_NAME,                               \
-                                       message,                                                \
-                                       "Failed assertion: v1 " #op " v2 (v1 = %s, v2 = %s)",   \
-                                       v1Str,                                                  \
-                                       v2Str);                                                 \
+            braincheck_internal_fail(__FILE__,                                                 \
+                                     __LINE__,                                                 \
+                                     BRAINCHECK_FUNCTION_NAME,                                 \
+                                     message,                                                  \
+                                     "Failed assertion: v1 " #op " v2 (v1 = %s, v2 = %s)",     \
+                                     v1Str,                                                    \
+                                     v2Str);                                                   \
         }                                                                                      \
     } while (0)
 
@@ -597,12 +597,12 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
         if (BRAINCHECK_UNLIKELY(!(v))) {                                                     \
             char v1Str[50];                                                                  \
             snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v), BRAINCHECK_VALUE(v)); \
-            braincheck_internal_assert(__FILE__,                                             \
-                                       __LINE__,                                             \
-                                       BRAINCHECK_FUNCTION_NAME,                             \
-                                       NULL,                                                 \
-                                       "Failed assertion: " #v " => %s",                     \
-                                       v1Str);                                               \
+            braincheck_internal_fail(__FILE__,                                               \
+                                     __LINE__,                                               \
+                                     BRAINCHECK_FUNCTION_NAME,                               \
+                                     NULL,                                                   \
+                                     "Failed assertion: " #v " => %s",                       \
+                                     v1Str);                                                 \
         }                                                                                    \
     } while (0)
 
@@ -611,39 +611,39 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
         if (BRAINCHECK_UNLIKELY(!(v))) {                                                     \
             char v1Str[50];                                                                  \
             snprintf(v1Str, sizeof(v1Str), BRAINCHECK_VALUE_FORMAT(v), BRAINCHECK_VALUE(v)); \
-            braincheck_internal_assert(__FILE__,                                             \
-                                       __LINE__,                                             \
-                                       BRAINCHECK_FUNCTION_NAME,                             \
-                                       message,                                              \
-                                       "Failed assertion: " #v " => %s",                     \
-                                       v1Str);                                               \
+            braincheck_internal_fail(__FILE__,                                               \
+                                     __LINE__,                                               \
+                                     BRAINCHECK_FUNCTION_NAME,                               \
+                                     message,                                                \
+                                     "Failed assertion: " #v " => %s",                       \
+                                     v1Str);                                                 \
         }                                                                                    \
     } while (0)
 
-            braincheck_internal_assert(__FILE__,                            \
-                                       __LINE__,                            \
-                                       BRAINCHECK_FUNCTION_NAME,            \
-                                       NULL,                                \
-                                       "Failed assertion: " #v " => NULL"); \
 #define braincheck_assert_nonnull(v)                                      \
     do {                                                                  \
         if (BRAINCHECK_UNLIKELY(NULL == (v))) {                           \
+            braincheck_internal_fail(__FILE__,                            \
+                                     __LINE__,                            \
+                                     BRAINCHECK_FUNCTION_NAME,            \
+                                     NULL,                                \
+                                     "Failed assertion: " #v " => NULL"); \
         }                                                                 \
     } while (0)
 
 #define braincheck_assert_nonnull_m(v, message)                           \
     do {                                                                  \
         if (BRAINCHECK_UNLIKELY(NULL == (v))) {                           \
-            braincheck_internal_assert(__FILE__,                            \
-                                       __LINE__,                            \
-                                       BRAINCHECK_FUNCTION_NAME,            \
-                                       message,                             \
-                                       "Failed assertion: " #v " => NULL"); \
+            braincheck_internal_fail(__FILE__,                            \
+                                     __LINE__,                            \
+                                     BRAINCHECK_FUNCTION_NAME,            \
+                                     message,                             \
+                                     "Failed assertion: " #v " => NULL"); \
         }                                                                 \
     } while (0)
 
 // clang-format off
-#define braincheck_assert_fail(message) braincheck_internal_assert(__FILE__, __LINE__, BRAINCHECK_FUNCTION_NAME, NULL, "Failed assertion: %s", message)
+#define braincheck_assert_fail(message) braincheck_internal_fail(__FILE__, __LINE__, BRAINCHECK_FUNCTION_NAME, NULL, "Failed assertion: %s", message)
 
 #define braincheck_assert_eq(v1, v2) braincheck_assert_comparison(==, v1, v2)
 #define braincheck_assert_neq(v1, v2) braincheck_assert_comparison(!=, v1, v2)
@@ -681,7 +681,7 @@ static inline void braincheck_internal_backtrace(const char* file, int line, con
 
 // clang-format on
 
-static BRAINCHECK_PRINTF_FUNCTION(5, 6) inline void braincheck_internal_assert(const char* file, int line, const char* function, const char* user_message, const char* format, ...)
+static BRAINCHECK_PRINTF_FUNCTION(5, 6) inline void braincheck_internal_fail(const char* file, int line, const char* function, const char* user_message, const char* format, ...)
 {
     char message[256];
     va_list args;
